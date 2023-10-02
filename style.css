@@ -1,0 +1,32 @@
+/* timekeeper.mehlhase.info */
+/* (c) Sascha Mehlhase - kontakt@mehlhase.info */
+
+* {
+  margin: 0;
+  padding: 0;
+  /*box-sizing: border-box;*/
+}
+
+body {
+  background-color: #00b140;
+  font: 14px sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#frame {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+/*  margin: -250px 0 0 -250px;*/
+/*  background-color: #fff;*/
+/*  border: 1px solid #aaa;*/
+  z-index: 1;
+}
+
+#frame canvas {
+/*  cursor: pointer;*/
+  width: 400px;
+  height: 500px;
+/*  border: 1px solid #ccc;*/
+}
