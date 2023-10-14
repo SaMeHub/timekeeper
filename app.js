@@ -227,7 +227,7 @@ window.onload = function() {
       ctx.font = radius * 0.08 + "px sans-serif";
       ctx.translate(0, radius * 0.07);
       // ctx.fillText(tStart.toLocaleTimeString() + " – " + tEnd.toLocaleTimeString(), 0, 0);
-      ctx.fillText(tStart.getHours() + ":" + tStart.getMinutes() + " – " + tEnd.getHours() + ":" + tEnd.getMinutes(), 0, 0);
+      ctx.fillText(tStart.getHours().toString().padStart(2, '0') + ":" + tStart.getMinutes().toString().padStart(2, '0') + " – " + tEnd.getHours().toString().padStart(2, '0') + ":" + tEnd.getMinutes().toString().padStart(2, '0'), 0, 0);
 
       // current time
       ctx.fillStyle = "rgba(255, 255, 255, " + trans + ")";
@@ -237,7 +237,7 @@ window.onload = function() {
       ctx.font = radius * 0.08 + "px sans-serif";
       ctx.translate(0, radius * 0.07);
       // ctx.fillText(tNow.toLocaleTimeString(), 0, 0);
-      ctx.fillText(tNow.getHours() + ":" + tNow.getMinutes(), 0, 0);
+      ctx.fillText(tNow.getHours().toString().padStart(2, '0') + ":" + tNow.getMinutes().toString().padStart(2, '0'), 0, 0);
     }
     
     ctx.restore();
