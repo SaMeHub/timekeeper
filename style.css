@@ -4,29 +4,95 @@
 * {
   margin: 0;
   padding: 0;
-  /*box-sizing: border-box;*/
+  box-sizing: border-box;
 }
 
 body {
-  background-color: #00b140;
+  background-color: rgba(0, 177, 64, 1);
   font: 14px sans-serif;
   margin: 0;
   padding: 0;
 }
 
-#frame {
+a, a:hover, a:visited {
+  color: rgba(255, 255, 255, 1);
+  text-decoration: none;
+}
+
+.frame {
   position: absolute;
   left: 50%;
   top: 50%;
-/*  margin: -250px 0 0 -250px;*/
-/*  background-color: #fff;*/
-/*  border: 1px solid #aaa;*/
   z-index: 1;
 }
 
-#frame canvas {
-/*  cursor: pointer;*/
-  width: 400px;
-  height: 500px;
-/*  border: 1px solid #ccc;*/
+.timekeeperbar {
+  position: absolute;
+  height: 30px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 55, 81, 0.5);
+  z-index: 2;
 }
+
+.timebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(255, 0, 0, 0), 5%, rgba(255, 160, 0, 0), 10%, rgba(26, 138, 185, 0));
+  z-index: 3;
+}
+
+.infobar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  line-height: 30px;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 4;
+}
+
+.infobar .infobar_box {
+  padding: 0 5px;
+  flex-basis: 100%;
+}
+
+.infobar .infobar_subbox {
+  padding: 0 5px;
+}
+
+.infobar .infobar_left {
+  text-align: left;
+}
+
+.infobar .infobar_center {
+  text-align: center;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.infobar .infobar_center .timeleft {
+  font-size: 18px;
+
+}
+
+.infobar .infobar_right {
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  font-size: 10px;
+  line-height: 12px;
+  justify-content: end;
+}
+

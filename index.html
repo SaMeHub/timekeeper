@@ -14,8 +14,25 @@
   	<script src="app.js" defer></script>
   </head>
   <body>
-    <div id="frame">
-      <canvas id="canvas">Your browser does not support the HTML5 canvas tag.</canvas>
+    <div class="frame">
+      <div class="timekeeperbar">
+        <div class="timebar">
+        </div>
+        <div class="infobar">
+          <div class="infobar_box infobar_left">
+            <a href="javascript:;" id="reset">&#9198;</a> 
+            <a href="javascript:;" id="minus">&#9207;</a> 
+            <a href="javascript:;" id="plus">&#9206;</a> 
+            <a href="javascript:;" id="play">&#9199;</a> 
+            <a href="javascript:;" id="show">&#9167;</a> 
+            <!--&#9205; &#9208; &#9209; &#9210;--></div>
+          <div class="infobar_box infobar_center"><span class="timelabel">time left</span><br/><span class="timeleft">15:00</span></div>
+          <div class="infobar_box infobar_right">
+            <div class="infobar_subbox">allocated timeslot<br/><span class="timespan">15:00 – 15:15</span></div>
+            <div class="infobar_subbox">current time<br/><span class="timenow">15:05</span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
