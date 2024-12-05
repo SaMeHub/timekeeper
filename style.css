@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-variant-emoji: text;
 }
 
 body {
@@ -94,5 +95,11 @@ a, a:hover, a:visited {
   font-size: 10px;
   line-height: 12px;
   justify-content: end;
+}
+
+@media only screen and (max-width: 600px) {
+  .infobar .infobar_right .infobar_subbox.hidenarrow {
+    display: none;
+  }
 }
 
