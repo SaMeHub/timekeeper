@@ -75,13 +75,13 @@ window.onload = function() {
     }
     
     // update transparency
-    var timekeeperbar = document.getElementsByClassName("timekeeperbar")[0];
+    var timekeeperbar = document.querySelector(".timekeeperbar");
     timekeeperbar.style.opacity = trans;
-    // var infobar = document.getElementsByClassName("infobar")[0];
+    // var infobar = document.querySelector(".infobar");
     // infobar.style.opacity = trans;
 
     // update bar position
-    var timebar = document.getElementsByClassName("timebar")[0];
+    var timebar = document.querySelector(".timebar");
     if (left > 0) {
       var warning = (1 / total * 100 * 100 / frac).toFixed(1);
       timebar.style.width = frac + "%";
@@ -93,8 +93,8 @@ window.onload = function() {
     }
 
     // update timer
-    var timelabel = document.getElementsByClassName("timelabel")[0];
-    var timeleft = document.getElementsByClassName("timeleft")[0];
+    var timelabel = document.querySelector(".timelabel");
+    var timeleft = document.querySelector(".timeleft");
     var mins = Math.abs(Math.trunc(left));
     var secs = Math.trunc((Math.abs(left) - mins) * 60).toString().padStart(2, '0');
     timeleft.innerHTML = mins + ":" + secs;
@@ -105,13 +105,13 @@ window.onload = function() {
     }
 
     // update timespan
-    var timespan = document.getElementsByClassName("timespan")[0];
+    var timespan = document.querySelector(".timespan");
     timespan.innerHTML = tStart.getHours().toString().padStart(2, '0') + ":" + tStart.getMinutes().toString().padStart(2, '0') +
                           " – " +
                           tEnd.getHours().toString().padStart(2, '0') + ":" + tEnd.getMinutes().toString().padStart(2, '0');
 
     // update current time
-    var timenow = document.getElementsByClassName("timenow")[0];
+    var timenow = document.querySelector(".timenow");
     timenow.innerHTML = tNow.getHours().toString().padStart(2, '0') + ":" + tNow.getMinutes().toString().padStart(2, '0');
 
   }
@@ -121,7 +121,10 @@ window.onload = function() {
     let border = 0;
     let maxW = Math.round(Math.min(window.visualViewport.width, window.visualViewport.height * WoverH) - border);
     let maxH = Math.round(Math.min(window.visualViewport.height, window.visualViewport.width / WoverH) - border);
-    var frame = document.getElementsByClassName("frame")[0];
+    var frame = document.querySelector(".frame");
+    // next two line overwrite to use full window width
+    maxW = window.visualViewport.width;
+    maxH = window.visualViewport.height;
     frame.style.width = maxW + "px";
     frame.style.height = maxH + "px";
     frame.style.marginTop = -(maxH / 2) + "px";
@@ -139,7 +142,7 @@ window.onload = function() {
     if (!isPaused) setTimeout(function(){fade = -1}, 1000);
   }
   
-  var reset = document.getElementById("reset");
+  var reset = document.querySelector("#reset");
   reset.addEventListener('click', function(event) {
     // console.log("reset");
     if (isPaused) {
@@ -151,7 +154,7 @@ window.onload = function() {
     updateTime();
   }, true);
   
-  var minus = document.getElementById("minus");
+  var minus = document.querySelector("#minus");
   minus.addEventListener('click', function(event) {
     // console.log("minus");
     if (isPaused) {
@@ -164,7 +167,7 @@ window.onload = function() {
     updateTime();
   }, true);
   
-  var plus = document.getElementById("plus");
+  var plus = document.querySelector("#plus");
   plus.addEventListener('click', function(event) {
     // console.log("plus");
     if (isPaused) {
@@ -177,7 +180,7 @@ window.onload = function() {
     updateTime();
   }, true);
   
-  var play = document.getElementById("play");
+  var play = document.querySelector("#play");
   play.addEventListener('click', function(event) {
     // console.log("play");
     isPaused = !isPaused;
@@ -185,7 +188,7 @@ window.onload = function() {
     updateTime();
   }, true);
   
-  var show = document.getElementById("show");
+  var show = document.querySelector("#show");
   show.addEventListener('click', function(event) {
     // console.log("show");
     isAlwaysOn = !isAlwaysOn;
