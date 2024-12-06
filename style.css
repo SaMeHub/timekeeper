@@ -69,12 +69,19 @@ a, a:hover, a:visited {
   flex-basis: 100%;
 }
 
-.infobar .infobar_subbox {
+/*.infobar .infobar_subbox {
   padding: 0 5px;
 }
-
+*/
 .infobar .infobar_left {
   text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  line-height: 22px;
+  font-size: 22px;
+  gap: 5px;
 }
 
 .infobar .infobar_center {
@@ -95,10 +102,11 @@ a, a:hover, a:visited {
   font-size: 10px;
   line-height: 12px;
   justify-content: end;
+  gap: 5px;
 }
 
 @media only screen and (max-width: 800px) {
-  .infobar .infobar_right .infobar_subbox.hidenarrow {
+  .infobar .infobar_right .hidenarrow {
     display: none;
   }
 }

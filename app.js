@@ -3,7 +3,8 @@
 
 // Registering Service Worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js');
+  // navigator.serviceWorker.register('/sw.js');
+  navigator.serviceWorker.register('http://localhost/~saschamehlhase/mehlhase.info_timekeeper/sw.js');
 }
 
 window.onload = function() {
@@ -143,6 +144,12 @@ window.onload = function() {
   }
   
   var reset = document.querySelector("#reset");
+  var minus = document.querySelector("#minus");
+  var plus = document.querySelector("#plus");
+  var play = document.querySelector("#play");
+  var pause = document.querySelector("#pause");
+  var show = document.querySelector("#show");
+
   reset.addEventListener('click', function(event) {
     // console.log("reset");
     if (isPaused) {
@@ -154,12 +161,11 @@ window.onload = function() {
     updateTime();
   }, true);
   
-  var minus = document.querySelector("#minus");
   minus.addEventListener('click', function(event) {
     // console.log("minus");
     if (isPaused) {
       duration -= 1.;
-      left -= 1.;
+      left = Math.ceil(left) - 1.;
       total = duration;
       notes = updateNotes(total)
       fadeCheck();
@@ -167,12 +173,11 @@ window.onload = function() {
     updateTime();
   }, true);
   
-  var plus = document.querySelector("#plus");
   plus.addEventListener('click', function(event) {
     // console.log("plus");
     if (isPaused) {
       duration += 1.;
-      left += 1.;
+      left = Math.trunc(left) + 1.;
       total = duration;
       notes = updateNotes(total)
       fadeCheck();
@@ -180,21 +185,56 @@ window.onload = function() {
     updateTime();
   }, true);
   
-  var play = document.querySelector("#play");
   play.addEventListener('click', function(event) {
     // console.log("play");
     isPaused = !isPaused;
+    play.style.display = "none";
+    pause.style.display = "block";
+    fadeCheck();
+    updateTime();
+  }, true);
+
+  pause.style.display = "none";
+  pause.addEventListener('click', function(event) {
+    // console.log("play");
+    isPaused = !isPaused;
+    play.style.display = "block";
+    pause.style.display = "none";
     fadeCheck();
     updateTime();
   }, true);
   
-  var show = document.querySelector("#show");
   show.addEventListener('click', function(event) {
     // console.log("show");
     isAlwaysOn = !isAlwaysOn;
     fadeCheck();
     updateTime();
   }, true);
+
+  window.addEventListener("keydown", function(event){
+    switch(event.key) {
+      case "r":
+      case "ArrowLeft":
+        reset.click();
+        break;
+      case "ArrowRight":
+      case " ":
+        if (isPaused) play.click();
+        else pause.click();
+        break;
+      case "+":
+      case "ArrowUp":
+        plus.click();
+        break;
+      case "-":
+      case "ArrowDown":
+        minus.click();
+        break;
+      case "v":
+        show.click();
+        break;
+    }
+  }, false);
   
   window.addEventListener('click', function(event) {
     fadeCheck();
