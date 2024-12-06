@@ -164,7 +164,7 @@ window.onload = function() {
   minus.addEventListener('click', function(event) {
     // console.log("minus");
     if (isPaused) {
-      duration -= 1.;
+      duration = Math.ceil(duration) - 1.;
       left = Math.ceil(left) - 1.;
       total = duration;
       notes = updateNotes(total)
@@ -176,7 +176,7 @@ window.onload = function() {
   plus.addEventListener('click', function(event) {
     // console.log("plus");
     if (isPaused) {
-      duration += 1.;
+      duration = Math.trunc(duration) + 1.;
       left = Math.trunc(left) + 1.;
       total = duration;
       notes = updateNotes(total)
