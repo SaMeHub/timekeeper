@@ -213,23 +213,28 @@ window.onload = function() {
 
   window.addEventListener("keydown", function(event){
     switch(event.key) {
+      case "1":
       case "r":
       case "ArrowLeft":
         reset.click();
         break;
+      case "4":
       case "ArrowRight":
       case " ":
         if (isPaused) play.click();
         else pause.click();
         break;
+      case "3":
       case "+":
       case "ArrowUp":
         plus.click();
         break;
+      case "2":
       case "-":
       case "ArrowDown":
         minus.click();
         break;
+      case "5":
       case "v":
         show.click();
         break;
