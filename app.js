@@ -76,6 +76,8 @@ window.onload = function() {
     }
     
     // update transparency
+    var fadebar = document.querySelector(".fadebar");
+    fadebar.style.opacity = trans;
     var timekeeperbar = document.querySelector(".timekeeperbar");
     timekeeperbar.style.opacity = trans;
     // var infobar = document.querySelector(".infobar");

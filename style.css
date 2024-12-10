@@ -27,13 +27,23 @@ a, a:hover, a:visited {
   z-index: 1;
 }
 
+.fadebar {
+  position: absolute;
+  height: 30px;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  background: linear-gradient(rgba(0, 55, 81, 0), rgba(0, 55, 81, 1));
+  z-index: 2;
+}
+
 .timekeeperbar {
   position: absolute;
   height: 30px;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 55, 81, 0.5);
+  background-color: rgba(0, 55, 81, 1);
   z-index: 2;
 }
 
