@@ -3,8 +3,8 @@
 
 // Registering Service Worker
 if ('serviceWorker' in navigator) {
-  // navigator.serviceWorker.register('/sw.js');
-  navigator.serviceWorker.register('http://localhost/~saschamehlhase/mehlhase.info_timekeeper/sw.js');
+  navigator.serviceWorker.register('/sw.js');
+  // navigator.serviceWorker.register('http://localhost/~saschamehlhase/mehlhase.info_timekeeper/sw.js');
 }
 
 window.onload = function() {
