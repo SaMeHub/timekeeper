@@ -1,4 +1,4 @@
-/* bogenspiele.mehlhase.info */
+/* timekeeper.mehlhase.info */
 /* (c) Sascha Mehlhase - kontakt@mehlhase.info */
 
 // Registering Service Worker
