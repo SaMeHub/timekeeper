@@ -27,23 +27,14 @@ a, a:hover, a:visited {
   z-index: 1;
 }
 
-.fadebar {
-  position: absolute;
-  height: 30px;
-  bottom: 30px;
-  left: 0;
-  right: 0;
-  background: linear-gradient(rgba(0, 55, 81, 0), rgba(0, 55, 81, 1));
-  z-index: 2;
-}
-
 .timekeeperbar {
   position: absolute;
   height: 30px;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 20%;
+  right: 20%;
   background-color: rgba(0, 55, 81, 1);
+  border-radius: 10px 10px 0 0;
   z-index: 2;
 }
 
@@ -54,6 +45,7 @@ a, a:hover, a:visited {
   left: 0;
   width: 100%;
   background: linear-gradient(90deg, rgba(255, 0, 0, 0), 5%, rgba(255, 160, 0, 0), 10%, rgba(26, 138, 185, 0));
+  border-radius: 10px 10px 0 0;
   z-index: 3;
 }
 
@@ -94,6 +86,10 @@ a, a:hover, a:visited {
   gap: 5px;
 }
 
+.infobar .infobar_left #punish {
+  font-size: 10px;
+}
+
 .infobar .infobar_center {
   text-align: center;
   font-size: 10px;
@@ -102,7 +98,6 @@ a, a:hover, a:visited {
 
 .infobar .infobar_center .timeleft {
   font-size: 18px;
-
 }
 
 .infobar .infobar_right {

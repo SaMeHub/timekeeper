@@ -1,7 +1,7 @@
 // self.importScripts('data/games.js');
 
 // Files to cache
-const cacheName = 'timekeeper-mehlhase-v2-0-2';
+const cacheName = 'timekeeper-mehlhase-v3-0-0';
 const appShellFiles = [
   '',
   'index.html',

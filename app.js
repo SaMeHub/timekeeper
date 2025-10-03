@@ -8,20 +8,32 @@ if ('serviceWorker' in navigator) {
 }
 
 window.onload = function() {
-  var duration = 15;
-  var tNow = new Date();
-  var tStart = new Date();
-  var tEnd = new Date();
+  let duration = 15;
+  let tNow = new Date();
+
+  // fetch('time.php')
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log('Using server time:', data.serverTime);
+  //     tNow = new Date(data.serverTime);
+  //     console.log('Local time:', new Date(tNow).toString());
+  //   })
+  //   .catch(error => console.error('Error fetching server time:', error));
+
+  let tStart = new Date(tNow);
+  let tEnd = new Date(tNow);
   tEnd.setMinutes(tEnd.getMinutes() + duration);
   // tEnd.setSeconds(tEnd.getSeconds() + 30);
   // tStart.setMinutes(tStart.getMinutes() - 4);
-  var total = (tEnd - tStart) / 1000 / 60;
-  var left = (tEnd - tNow) / 1000 / 60;
-  var frac = Math.round(left / total * 100);
+  let total = (tEnd - tStart) / 1000 / 60;
+  let left = (tEnd - tNow) / 1000 / 60;
+  let frac = Math.round(left / total * 100);
   
   // times for a ten-second notification
   function updateNotes(total) {
-    var notes = [1, 2, 3, 5, 10, Math.trunc(total / 8), Math.trunc(total / 4), Math.trunc(total / 2)];
+    // let notes = [Math.trunc(total / 8), Math.trunc(total / 4), Math.trunc(total / 2), Math.trunc(total / 4 * 3)];
+    let notes = [];
+    for (let i = 5; i < total; i += 5) notes.push(i); 
     notes = notes.filter((value, index) => notes.indexOf(value) === index);
     notes.sort(function(a, b){return a - b});
     for (let index = notes.length - 1; index >= 0; index--) {
@@ -30,15 +42,16 @@ window.onload = function() {
     }
     return notes;
   }
-  var notes = updateNotes(total);
+  let notes = updateNotes(total);
   
-  var trans = 1;
-  var fadesteps = 10;
-  var fadestate = 0;
-  var fade = 0;
+  let trans = 1;
+  let fadesteps = 10;
+  let fadestate = 0;
+  let fade = 0;
   // setTimeout(function(){fade = -1}, 2000);
-  var isPaused = true;
-  var isAlwaysOn = false;
+  let isPaused = true;
+  let isAlwaysOn = false;
+  let punish = [0, 1, 2, 3, 4, 5, 6, 7];
 
   // draw timer
   function updateTime() {
@@ -51,71 +64,102 @@ window.onload = function() {
     
     tNow = new Date();
     if (isPaused) {
-      tEnd = new Date(tNow);
-      tEnd.setMinutes(tEnd.getMinutes() + left);
-      tEnd.setSeconds(tEnd.getSeconds() + (left - Math.trunc(left)) * 60);
+      tEnd = new Date(tNow.getTime() + left * 60000)
       if (left == duration) {
         tStart = new Date(tNow);
       }
       fade = 1;
     }
 
-    if (isAlwaysOn) fade = 1;
+    let showpathinner = document.querySelector("#showpathinner");
+    if (isAlwaysOn) {
+      fade = 1;
+      showpathinner.style.fill = "#ffffff";
+    } else {
+      showpathinner.style.fill = "#ffffff77";
+    }
     
+    let punishtext = document.querySelector("#punish");
+    punishtext.innerHTML = punish[0];
+
     // 
     left = (tEnd - tNow) / 1000 / 60;
     frac = (left / total * 100).toFixed(1);
-    // console.log(total + " " + Math.round(left * 1000) / 1000 + " " + Math.round(left/total * 1000)/1000 + " " + fadesteps + " " + fadestate + " " + fade + " " + notes);
     
-    if (left < notes[notes.length - 1] + 0.05) {
+    if (left < (notes[notes.length - 1] + 0.05)) {
       fade = 1;
       if (notes.length > 1) {
         notes.pop();
         setTimeout(function(){fade = -1}, 10000);
       }
+      console.log(notes);
     }
+    if (left < 3.05) fade = 1;
     
     // update transparency
-    var fadebar = document.querySelector(".fadebar");
-    fadebar.style.opacity = trans;
-    var timekeeperbar = document.querySelector(".timekeeperbar");
+    let timekeeperbar = document.querySelector(".timekeeperbar");
     timekeeperbar.style.opacity = trans;
-    // var infobar = document.querySelector(".infobar");
-    // infobar.style.opacity = trans;
 
     // update bar position
-    var timebar = document.querySelector(".timebar");
+    let timebar = document.querySelector(".timebar");
     if (left > 0) {
-      var warning = (1 / total * 100 * 100 / frac).toFixed(1);
+      let warning = (1 / total * 100 * 100 / frac).toFixed(1);
       timebar.style.width = frac + "%";
-      timebar.style.background = "linear-gradient(90deg, rgba(255, 0, 0, 1), rgba(255, 0, 0, 1), " + warning + "%, rgba(255, 160, 0, 1), " + (3 * warning) + "%, rgba(26, 138, 185, 1))";
-      // timebar.style.background = "linear-gradient(90deg, rgba(255, 0, 0, " + trans + "), rgba(255, 0, 0, " + trans + "), " + warning + "%, rgba(255, 160, 0, " + trans + "), " + (3 * warning) + "%, rgba(26, 138, 185, " + trans + "))";
+      timebar.style.background = "linear-gradient(90deg, rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5), " + warning + "%, rgba(255, 160, 0, 0.5), " + (3 * warning) + "%, rgba(26, 138, 185, 0.5))";
     } else {
       timebar.style.width = "100%";
       timebar.style.background = "rgba(255, 0, 0, " + trans + ")";
     }
 
     // update timer
-    var timelabel = document.querySelector(".timelabel");
-    var timeleft = document.querySelector(".timeleft");
-    var mins = Math.abs(Math.trunc(left));
-    var secs = Math.trunc((Math.abs(left) - mins) * 60).toString().padStart(2, '0');
+    let frame = document.querySelector(".frame");
+    let timelabel = document.querySelector(".timelabel");
+    let timeleft = document.querySelector(".timeleft");
+    let mins = Math.abs(Math.trunc(left));
+    let secs = Math.trunc((Math.abs(left) - mins) * 60).toString().padStart(2, '0');
     timeleft.innerHTML = mins + ":" + secs;
     if (left > 0) {
       timelabel.innerHTML = "time left";
+      frame.style.background = "";
     } else {
       timelabel.innerHTML = "time over";
+      switch(punish[0]) {
+        case 1:
+          frame.style.background = "radial-gradient(circle at center, rgba(0, 0, 0, 0) " + Math.max(0, 100 + left * 100)  + "%, rgba(0, 0, 0, 0.5) 100%)";
+          break;
+        case 2:
+          frame.style.background = "radial-gradient(circle at center, rgba(255, 0, 0, 0) " + Math.max(0, 100 + left * 100)  + "%, rgba(255, 0, 0, 0.5) 100%)";
+          break;
+        case 3:
+          frame.style.background = "radial-gradient(circle at center, rgba(0, 0, 0, 0) " + Math.max(0, 100 + left * 100)  + "%, rgba(0, 0, 0, 0.5) 100%), radial-gradient(circle at center, rgba(255, 0, 0, 0) " + Math.max(80, 100 + (left + 1) * 100)  + "%, rgba(255, 0, 0, 0.5) 100%)";
+          break;
+        case 4:
+          frame.style.background = "radial-gradient(circle at bottom center, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0)" + Math.min(100, left * -100)  + "%)";
+          break;
+        case 5:
+          frame.style.background = "radial-gradient(circle at bottom center, rgba(255, 0, 0, 0.5) 0, rgba(255, 0, 0, 0)" + Math.min(100, left * -100)  + "%)";
+          break;
+        case 6:
+          frame.style.background = "radial-gradient(circle at top left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0)" + Math.min(50, left * -50)  + "%), radial-gradient(circle at top right, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0)" + Math.min(50, left * -50)  + "%), radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0)" + Math.min(50, left * -50)  + "%), radial-gradient(circle at bottom left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0)" + Math.min(50, left * -50)  + "%)";
+          break;
+        case 7:
+          frame.style.background = "radial-gradient(circle at top left, rgba(255, 0, 0, 0.5) 0, rgba(255, 0, 0, 0)" + Math.min(50, left * -50)  + "%), radial-gradient(circle at top right, rgba(255, 0, 0, 0.5) 0, rgba(255, 0, 0, 0)" + Math.min(50, left * -50)  + "%), radial-gradient(circle at bottom right, rgba(255, 0, 0, 0.5) 0, rgba(255, 0, 0, 0)" + Math.min(50, left * -50)  + "%), radial-gradient(circle at bottom left, rgba(255, 0, 0, 0.5) 0, rgba(255, 0, 0, 0)" + Math.min(50, left * -50)  + "%)";
+          break;
+        default:
+          frame.style.background = "";
+      }
     }
 
     // update timespan
-    var timespan = document.querySelector(".timespan");
+    let timespan = document.querySelector(".timespan");
     timespan.innerHTML = tStart.getHours().toString().padStart(2, '0') + ":" + tStart.getMinutes().toString().padStart(2, '0') +
                           " – " +
-                          tEnd.getHours().toString().padStart(2, '0') + ":" + tEnd.getMinutes().toString().padStart(2, '0');
+                          tEnd.getHours().toString().padStart(2, '0') + ":" + tEnd.getMinutes().toString().padStart(2, '0') +
+                          " (" + duration + "')";;
 
     // update current time
-    var timenow = document.querySelector(".timenow");
-    timenow.innerHTML = tNow.getHours().toString().padStart(2, '0') + ":" + tNow.getMinutes().toString().padStart(2, '0');
+    let timenow = document.querySelector(".timenow");
+    timenow.innerHTML = tNow.getHours().toString().padStart(2, '0') + ":" + tNow.getMinutes().toString().padStart(2, '0') + ":" + tNow.getSeconds().toString().padStart(2, '0');
 
   }
 
@@ -124,7 +168,7 @@ window.onload = function() {
     let border = 0;
     let maxW = Math.round(Math.min(window.visualViewport.width, window.visualViewport.height * WoverH) - border);
     let maxH = Math.round(Math.min(window.visualViewport.height, window.visualViewport.width / WoverH) - border);
-    var frame = document.querySelector(".frame");
+    let frame = document.querySelector(".frame");
     // next two line overwrite to use full window width
     maxW = window.visualViewport.width;
     maxH = window.visualViewport.height;
@@ -145,15 +189,16 @@ window.onload = function() {
     if (!isPaused) setTimeout(function(){fade = -1}, 1000);
   }
   
-  var reset = document.querySelector("#reset");
-  var minus = document.querySelector("#minus");
-  var plus = document.querySelector("#plus");
-  var play = document.querySelector("#play");
-  var pause = document.querySelector("#pause");
-  var show = document.querySelector("#show");
+  let reset = document.querySelector("#reset");
+  let minus = document.querySelector("#minus");
+  let plus = document.querySelector("#plus");
+  let play = document.querySelector("#play");
+  let pause = document.querySelector("#pause");
+  let show = document.querySelector("#show");
+  let punishtext = document.querySelector("#punish");
 
   reset.addEventListener('click', function(event) {
-    // console.log("reset");
+    // console.log("reset clicked");
     if (isPaused) {
       left = duration;
       total = duration;
@@ -164,10 +209,10 @@ window.onload = function() {
   }, true);
   
   minus.addEventListener('click', function(event) {
-    // console.log("minus");
+    // console.log("minus clicked");
     if (isPaused) {
-      duration = Math.ceil(duration) - 1.;
-      left = Math.ceil(left) - 1.;
+      duration = Math.max(1, duration - 1);
+      (left == duration) ? left = Math.max(1, left - 1) : left -= 1;
       total = duration;
       notes = updateNotes(total)
       fadeCheck();
@@ -176,10 +221,10 @@ window.onload = function() {
   }, true);
   
   plus.addEventListener('click', function(event) {
-    // console.log("plus");
+    // console.log("plus clicked");
     if (isPaused) {
-      duration = Math.trunc(duration) + 1.;
-      left = Math.trunc(left) + 1.;
+      if (left > 0) duration += 1;
+      left += 1;
       total = duration;
       notes = updateNotes(total)
       fadeCheck();
@@ -188,29 +233,40 @@ window.onload = function() {
   }, true);
   
   play.addEventListener('click', function(event) {
-    // console.log("play");
+    // console.log("play clicked");
     isPaused = !isPaused;
     play.style.display = "none";
     pause.style.display = "block";
+    plus.style.opacity = 0.5;
+    minus.style.opacity = 0.5;
+    reset.style.opacity = 0.5;
     fadeCheck();
     updateTime();
   }, true);
 
   pause.style.display = "none";
   pause.addEventListener('click', function(event) {
-    // console.log("play");
+    // console.log("pause clicked");
     isPaused = !isPaused;
     play.style.display = "block";
     pause.style.display = "none";
+    plus.style.opacity = 1;
+    minus.style.opacity = 1;
+    reset.style.opacity = 1;
     fadeCheck();
     updateTime();
   }, true);
   
   show.addEventListener('click', function(event) {
-    // console.log("show");
+    // console.log("show clicked");
     isAlwaysOn = !isAlwaysOn;
     fadeCheck();
     updateTime();
+  }, true);
+
+  punishtext.addEventListener('click', function(event) {
+    // console.log("punish clicked");
+    punish.push(punish.shift());
   }, true);
 
   window.addEventListener("keydown", function(event){
@@ -239,6 +295,10 @@ window.onload = function() {
       case "5":
       case "v":
         show.click();
+        break;
+      case "p":
+      case "6":
+        punishtext.click();
         break;
     }
   }, false);
